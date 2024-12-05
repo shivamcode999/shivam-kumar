@@ -1,0 +1,129 @@
+<%- include("components/head") %> <%- include("components/header") %>
+<div class="container">
+  <div class="row justify-content-between">
+    <div class="col-auto">
+      <h2>Users</h2>
+    </div>
+    <div class="col-auto">
+      <form
+        class="d-flex"
+        role="search"
+        action="/api/search/user"
+        method="post"
+        id="search-user"
+      >
+        <input
+          class="form-control me-2"
+          name="name"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success">Search</button>
+      </form>
+    </div>
+    <div class="col-auto">
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        data-url="user"
+        class="btn btn-primary create-modal"
+        data-bs-toggle="modal"
+        data-bs-target="#add-modal"
+      >
+        <i class="fa-solid fa-user-plus"></i>
+      </button>
+      <!-- Button trigger modal -->
+    </div>
+  </div>
+  <div class="row">
+    <table class="table text-center" id="user-data">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>NAME</th>
+          <th>MOBILE</th>
+          <th>EMAIL</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(function(user){%>
+        <tr id="row-<%= user.id %>">
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td><%= user.mobile %></td>
+          <td><%= user.email %></td>
+          <td>
+            <i
+              data-url="user?id=<%= user.id %>"
+              class="fa-solid fa-trash delete-btn text-danger"
+            ></i>
+            <i
+              data-url="user?id=<%= user.id %>"
+              class="fa-solid fa-user-pen edit text-success"
+            ></i>
+          </td>
+        </tr>
+        <% })%>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- that is modal  -->
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="add-modal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Modal <span>Create</span>
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Number</label>
+            <input type="number" class="form-control" name="mobile" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Sumbit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- that is modal end -->
+<%- include("components/scripts") %>
